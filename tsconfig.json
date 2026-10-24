@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+    "paths": {
+      "@domain/*": ["./src/domain/*"],
+      "@schemas/*": ["./src/schemas/*"],
+      "@extraction/*": ["./src/extraction/*"],
+      "@rendering/*": ["./src/rendering/*"],
+      "@database/*": ["./src/database/*"],
+      "@publishers/*": ["./src/publishers/*"]
+    }
+  },
+  "include": ["src", "tests", "scripts", "vitest.config.ts"]
+}

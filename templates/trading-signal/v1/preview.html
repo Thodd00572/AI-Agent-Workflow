@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strike Signals — format preview</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0B0E14;
+      color: #FFFFFF;
+    }
+    .page {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+    aside {
+      background: #05070A;
+      border-right: 1px solid #0F141D;
+      padding: 20px;
+    }
+    aside h1 { margin: 0 0 6px; font-size: 16px; color: #39FF14; letter-spacing: 0.08em; }
+    aside p { margin: 0 0 14px; font-size: 12px; color: #9AA0A6; line-height: 1.45; }
+    aside label { display: block; font-size: 11px; letter-spacing: 0.12em; color: #9AA0A6; margin-top: 10px; }
+    aside input, aside select {
+      width: 100%; margin-top: 4px; padding: 8px;
+      background: #0F141D; color: #FFFFFF; border: 1px solid #0B0E14;
+    }
+    aside button {
+      margin-top: 16px; width: 100%; padding: 10px;
+      font-weight: 800; cursor: pointer;
+      background: #39FF14; color: #0B0E14; border: 0;
+    }
+    aside button.secondary {
+      margin-top: 8px;
+      background: #0F141D;
+      color: #39FF14;
+      border: 1px solid #39FF14;
+    }
+    #live {
+      margin: 12px 0 0;
+      padding: 10px;
+      background: #0F141D;
+      font-size: 12px;
+      color: #9AA0A6;
+      line-height: 1.45;
+    }
+    #live strong { color: #FFFFFF; }
+    #live.warn { color: #DC143C; }
+    .gallery {
+      display: flex;
+      gap: 28px;
+      padding: 24px;
+      overflow-x: auto;
+      align-items: flex-start;
+    }
+    .col { flex: 0 0 auto; }
+    .col h2 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: #9AA0A6;
+    }
+    .col h2 b { color: #FFFFFF; font-weight: 800; }
+    .stage { overflow: hidden; background: #05070A; }
+    iframe { border: 0; display: block; }
+    @media (max-width: 1100px) {
+      .page { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside>
+      <h1>STRIKE SIGNALS</h1>
+      <p>Live candles for the ticker, then your Entry / SL / TP guidelines on top. Admin values stay authoritative.</p>
+      <div id="live">Loading live market data…</div>
+      <label>DIRECTION</label>
+      <select id="direction"><option>SHORT</option><option>LONG</option></select>
+      <label>TICKER SYMBOL</label>
+      <input id="symbol" value="XAUUSD" />
+      <label>TIMEFRAME</label>
+      <input id="timeframe" value="30 MINUTES" />
+      <label>ENTRY LOW</label>
+      <input id="entryLow" type="number" value="4116" />
+      <label>ENTRY HIGH</label>
+      <input id="entryHigh" type="number" value="4129" />
+      <label>STOP LOSS</label>
+      <input id="stop" type="number" value="4135" />
+      <label>TP1 LOW</label>
+      <input id="tp1l" type="number" value="4092" />
+      <label>TP1 HIGH</label>
+      <input id="tp1h" type="number" value="4104" />
+      <label>TP2 LOW</label>
+      <input id="tp2l" type="number" value="4016" />
+      <label>TP2 HIGH</label>
+      <input id="tp2h" type="number" value="4020" />
+      <button id="draw" type="button">Redraw all formats</button>
+      <button id="prefill" class="secondary" type="button">Prefill zones from last price</button>
+    </aside>
+    <div class="gallery">
+      <div class="col">
+        <h2><b>TELEGRAM</b> 1920×1080 · 16:9</h2>
+        <div class="stage" style="width:730px;height:410px">
+          <iframe id="f-telegram" width="1920" height="1080" style="transform:scale(0.3802);transform-origin:top left"></iframe>
+        </div>
+      </div>
+      <div class="col">
+        <h2><b>TWITTER / X</b> 1200×1600 · 3:4</h2>
+        <div class="stage" style="width:384px;height:512px">
+          <iframe id="f-x" width="1200" height="1600" style="transform:scale(0.32);transform-origin:top left"></iframe>
+        </div>
+      </div>
+      <div class="col">
+        <h2><b>TIKTOK</b> 1080×1920 · 9:16</h2>
+        <div class="stage" style="width:302px;height:538px">
+          <iframe id="f-tiktok" width="1080" height="1920" style="transform:scale(0.2796);transform-origin:top left"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const fields = ["direction","symbol","timeframe","entryLow","entryHigh","stop","tp1l","tp1h","tp2l","tp2h"];
+    let lastPrice;
+    function query() {
+      const q = new URLSearchParams();
+      fields.forEach((id) => q.set(id, document.getElementById(id).value));
+      return q.toString();
+    }
+    function draw() {
+      const qs = query();
+      document.getElementById("f-telegram").src = "/preview/card.html?format=telegram&" + qs;
+      document.getElementById("f-x").src = "/preview/card.html?format=x&" + qs;
+      document.getElementById("f-tiktok").src = "/preview/card.html?format=tiktok&" + qs;
+    }
+    function seedFromLast(last, direction) {
+      const pad = Math.max(last * 0.0015, last >= 100 ? 4 : last >= 10 ? 0.08 : 0.0008);
+      const digits = last >= 100 ? 2 : last >= 10 ? 3 : 5;
+      const r = (n) => Number(n.toFixed(digits));
+      if (direction === "SHORT") {
+        return {
+          entryLow: r(last),
+          entryHigh: r(last + pad),
+          stop: r(last + pad * 2.2),
+          tp1l: r(last - pad * 3.2),
+          tp1h: r(last - pad * 2),
+          tp2l: r(last - pad * 8),
+          tp2h: r(last - pad * 6.5)
+        };
+      }
+      return {
+        entryLow: r(last - pad),
+        entryHigh: r(last),
+        stop: r(last - pad * 2.2),
+        tp1l: r(last + pad * 2),
+        tp1h: r(last + pad * 3.2),
+        tp2l: r(last + pad * 6.5),
+        tp2h: r(last + pad * 8)
+      };
+    }
+    function applySeed(seed) {
+      Object.entries(seed).forEach(([id, value]) => {
+        document.getElementById(id).value = String(value);
+      });
+    }
+    async function loadQuote(autoPrefill) {
+      const box = document.getElementById("live");
+      const symbol = document.getElementById("symbol").value;
+      const timeframe = document.getElementById("timeframe").value;
+      box.className = "";
+      box.textContent = "Loading live market data…";
+      try {
+        const res = await fetch("/api/market/candles?symbol=" + encodeURIComponent(symbol) + "&timeframe=" + encodeURIComponent(timeframe));
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.message || "unavailable");
+        lastPrice = data.last;
+        let entryMid = (Number(document.getElementById("entryLow").value) + Number(document.getElementById("entryHigh").value)) / 2;
+        let far = Math.abs(lastPrice - entryMid) / lastPrice > 0.03;
+        if (far && autoPrefill) {
+          applySeed(seedFromLast(lastPrice, document.getElementById("direction").value));
+          far = false;
+        }
+        box.innerHTML = "<strong>" + data.symbol + "</strong> last <strong>" + Number(lastPrice).toLocaleString("en-US") +
+          "</strong><br>" + data.bars + " live " + data.interval.toLowerCase() + " candles via " + data.provider +
+          " (" + data.mappedSymbol + ").";
+        if (far) {
+          box.className = "warn";
+          box.innerHTML += "<br>Guidelines are far from live price. Prefill, then edit Entry / SL / TP.";
+        }
+      } catch (err) {
+        lastPrice = undefined;
+        box.className = "warn";
+        box.textContent = "Live candles unavailable. Chart will use a synthetic path until market data responds.";
+      }
+      draw();
+    }
+    document.getElementById("draw").addEventListener("click", draw);
+    document.getElementById("prefill").addEventListener("click", () => {
+      if (lastPrice == null) return loadQuote(true);
+      applySeed(seedFromLast(lastPrice, document.getElementById("direction").value));
+      draw();
+    });
+    fields.forEach((id) => {
+      document.getElementById(id).addEventListener("change", () => {
+        if (id === "symbol" || id === "timeframe") loadQuote(false);
+        else draw();
+      });
+    });
+    loadQuote(true);
+  </script>
+</body>
+</html>
