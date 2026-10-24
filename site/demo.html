@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Agent Workflow — Layers</title>
+  <meta name="description" content="A feature with no path falls straight to production. Eight layers intercept the work. Tests catch what code would have shipped." />
+  <link rel="stylesheet" href="demo.css" />
+</head>
+<body>
+  <a class="skip" href="#story">Skip to the story</a>
+
+  <header class="bar">
+    <a class="back" href="index.html">← AI Agent Workflow</a>
+    <p class="bar-note mono">A layer is only useful if it intercepts work before production.</p>
+    <div class="bar-actions">
+      <button id="pause" type="button">Pause</button>
+      <button id="replay" type="button">Replay</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="phone" aria-label="ADLC layers animation">
+      <canvas id="scene" width="390" height="780"></canvas>
+    </section>
+
+    <aside id="story" class="story">
+      <p class="eyebrow mono">THE DELIVERY SYSTEM, MOVING</p>
+      <h1>Eight layers.<br>One expensive destination.</h1>
+      <p id="caption" class="caption">A feature with no path falls straight to production.</p>
+      <ol id="beats" class="beats">
+        <li data-phase="void">No path. Every slice is an ungated ship.</li>
+        <li data-phase="late">Late gates appear. A few slices get caught at verify and release.</li>
+        <li data-phase="tests">Tests exist before the code. Most work never reaches production unproven.</li>
+        <li data-phase="hold">ADLC does not make agents faster. It makes production see less unproven work.</li>
+      </ol>
+      <dl class="key">
+        <div><dt class="swatch ring"></dt><dd>Traveling</dd></div>
+        <div><dt class="swatch ring orange"></dt><dd>Missed a layer</dd></div>
+        <div><dt class="swatch ring green"></dt><dd>Caught by tests</dd></div>
+        <div><dt class="swatch ring purple"></dt><dd>Caught by a later gate</dd></div>
+      </dl>
+      <p class="foot-note">The visual language is the caching-layers explainer: a request falls, a layer either catches it or lets it through, the counter only moves when the expensive thing is touched. Here the expensive thing is an ungated production incident.</p>
+    </aside>
+  </main>
+
+  <script src="demo.js"></script>
+</body>
+</html>

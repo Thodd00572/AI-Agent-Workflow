@@ -1,0 +1,25 @@
+---
+description: How to behave inside a feature folder — which persona, template and gate apply to each ADLC stage
+globs: features/**
+alwaysApply: false
+---
+
+# Working inside `features/NNN-slug/`
+
+Find the current stage with `node scripts/adlc.mjs status <feature>`. Then:
+
+| Stage | Load persona | Fill template | Gate |
+|---|---|---|---|
+| 1 | `adlc/personas/A-product-owner.md` | `01-requirement.md` | G1 |
+| 2 | `adlc/personas/B-system-architect.md` | `02-system-map.md` | G2 |
+| 3 | `adlc/personas/C-solution-designer.md` | `03-solution-design.md` | G3 |
+| 4 | `adlc/personas/D-build-lead.md` | `04-build-plan.md` | G4 |
+| 5 | `adlc/personas/E-quality-engineer.md` | `05-test-plan/README.md` + tests | G5 |
+| 6 | `adlc/personas/D-build-lead.md` | code + `04-build-log.md` | G6 |
+| 7 | `adlc/personas/E-quality-engineer.md` | `06-test-summary.md` | G7 |
+| 8 | `adlc/personas/F-delivery-lead.md` | `07-change-pack/` | G8 |
+
+- Read every upstream artefact that is approved. Do not edit it. If it is wrong, write the problem under `## Open questions` and stop.
+- Keep IDs: `REQ-n`, `NFR-n`, `DR-n`. Reference them, never rename them.
+- Run `node scripts/adlc.mjs check <feature>` before you report the stage as ready for the gate.
+- When a defect escapes a gate, append one line to `adlc/lessons.md`.

@@ -1,0 +1,98 @@
+// Content model for the ADLC site. Kept in sync with adlc/ by hand; keep it short.
+window.ADLC = {
+  stages: [
+    {
+      n: 1, gate: 'G1', name: 'Requirement', persona: 'A', personaName: 'Product owner',
+      produces: 'A testable requirement', file: '01-requirement.md',
+      stop: 'Stops if scope or value still needs a product decision',
+      does: 'Interviews the human one question at a time, each with a recommended answer, until nothing is undecided. Writes REQ-n and NFR-n ids that every later stage traces back to.',
+      checks: ['≥ 1 REQ- id, each filled in', 'has Out of scope', 'every NFR has a number', 'no open questions'],
+      human: 'Is this the problem worth solving? Is the scope decided?',
+      mode: 'Human in the loop',
+    },
+    {
+      n: 2, gate: 'G2', name: 'Architecture', persona: 'B', personaName: 'System architect',
+      produces: 'The system and dependency map', file: '02-system-map.md',
+      stop: 'Stops if a dependency is unknown, or the change crosses a domain',
+      does: 'Places the feature on the landscape: components, data flow, owners, dependencies. Every REQ lands somewhere.',
+      checks: ['references every REQ / NFR', 'has Dependencies', 'no open questions'],
+      human: 'Does it fit the landscape? Is an exception needed?',
+      mode: 'Assist',
+    },
+    {
+      n: 3, gate: 'G3', name: 'Design', persona: 'C', personaName: 'Solution designer',
+      produces: 'Solution design incl. security, capacity, integrations', file: '03-solution-design.md',
+      stop: 'Stops if security review or an integration owner still needs to respond',
+      does: 'Reads the real code and designs the change: deep modules, interfaces, data, errors, security, performance. Numbers design rules as DR-n.',
+      checks: ['≥ 1 DR- id', 'references every REQ / NFR', 'no open integration asks', 'no open questions'],
+      human: 'Has security responded? Are the modules deep enough?',
+      mode: 'Assist',
+    },
+    {
+      n: 4, gate: 'G4', name: 'Build plan', persona: 'D', personaName: 'Build lead',
+      produces: 'A repository-specific PRP in vertical slices', file: '04-build-plan.md',
+      stop: 'Stops if the repository does not match the accepted design',
+      does: 'Cuts tracer-bullet slices across every layer, names files and commands per slice, marks blockers and AFK vs human-in-the-loop.',
+      checks: ['≥ 1 slice', 'every slice has Files: and Verify:', 'every slice covers an id', 'has Feedback loop'],
+      human: 'Are the slices vertical? Anything missing from 03?',
+      mode: 'Assist',
+    },
+    {
+      n: 5, gate: 'G5', name: 'Test plan', persona: 'E', personaName: 'Quality engineer',
+      produces: 'Tests written before the code — red', file: '05-test-plan/',
+      stop: 'Stops if a requirement has no testable form',
+      does: 'One test per REQ / NFR / DR minimum, including failure, security and performance cases. Runs them; records the failing run.',
+      checks: ['every id maps to a test', 'records a red run'],
+      human: 'Do the tests test the right thing?',
+      mode: 'Act in a branch', testsFirst: true,
+    },
+    {
+      n: 6, gate: 'G6', name: 'Build', persona: 'D', personaName: 'Build lead',
+      produces: 'Code in a branch, one commit per slice', file: '04-build-log.md',
+      stop: 'Stops if a test contradicts the design, or the repo diverges from 03',
+      does: 'Red → green → refactor against the stage-5 tests. Follows the plan; never quietly redesigns. Independent slices run as parallel subagents.',
+      checks: ['G5 approved before build', 'one log entry per planned slice', 'feedback loop recorded green'],
+      human: 'Does the code follow 03 and 04? Review the diff with a fresh-context critic.',
+      mode: 'AFK · Act in a branch',
+    },
+    {
+      n: 7, gate: 'G7', name: 'Verify', persona: 'E', personaName: 'Quality engineer',
+      produces: 'Test summary traced to every id', file: '06-test-summary.md',
+      stop: 'Stops if the evidence is incomplete',
+      does: 'Runs everything. Maps every REQ, NFR and DR to a result with an evidence path. Lists gaps; never rounds up.',
+      checks: ['every id has a result row', 'every row has evidence', 'non-pass ids explicitly accepted'],
+      human: 'Is the evidence real? Would you ship on it?',
+      mode: 'Assist',
+    },
+    {
+      n: 8, gate: 'G8', name: 'Release', persona: 'F', personaName: 'Delivery lead',
+      produces: 'Timeline, UAT evidence, change pack', file: '07-change-pack/',
+      stop: 'Stops if a required approval is still with a person',
+      does: 'Starts from the production date. Runs UAT per REQ, prepares deploy, rollback (rehearsed), monitoring and approvals. Cannot approve its own change.',
+      checks: ['deploy, rollback, uat, approvals exist', 'every REQ walked in UAT', 'rollback rehearsed with a date', 'no pending approvals', 'F is not an approver'],
+      human: 'All human approvals obtained. The change can be undone.',
+      mode: 'Assist',
+    },
+  ],
+
+  personas: [
+    { id: 'A', name: 'Product owner', defines: 'why and what', produces: 'A testable requirement', back: 'Scope or value still needs a product decision', never: 'Chooses a technology. Sets a date.' },
+    { id: 'B', name: 'System architect', defines: 'where it fits', produces: 'The system and dependency map', back: 'A dependency is unknown, or the change crosses a domain', never: 'Grants itself an exception.' },
+    { id: 'C', name: 'Solution designer', defines: 'how it should work', produces: 'Solution design incl. security, capacity, integrations', back: 'Security review or an integration owner still needs to respond', never: 'Signs off security. Drops a REQ silently.' },
+    { id: 'D', name: 'Build lead', defines: 'the plan, then the code', produces: 'A repository-specific PRP, then code in a branch', back: 'The repository does not match the accepted design', never: 'Merges. Redesigns C. Edits a test to pass.' },
+    { id: 'E', name: 'Quality engineer', defines: 'the proof', produces: 'Tests before the code, then a traced test summary', back: 'A requirement has no test, or the evidence is incomplete', never: 'Weakens a test. Writes feature code.' },
+    { id: 'F', name: 'Delivery lead', defines: 'the date and the release', produces: 'Timeline, UAT evidence and the change pack', back: 'A required approval is still with a person', never: 'Approves its own change. Deploys.' },
+  ],
+
+  autonomy: [
+    { level: '0 · Shadow', may: 'Observe. Produce nothing that is kept.', human: 'Everything.', up: 'A human has done the stage ≥ 3 times with the agent watching.' },
+    { level: '1 · Assist', may: 'Draft the artefact. Report gaps.', human: 'Reviews every line. Accepts the gate.', up: '≥ 5 features where the draft needed only minor edits.' },
+    { level: '2 · Act', may: 'Execute in a branch or sandbox: code, tests, PR.', human: 'Accepts from evidence. Reviews the diff.', up: '≥ 5 features with zero escaped defects at that gate.' },
+    { level: '3 · Scale', may: 'Run the proven path on many features in parallel.', human: 'Accepts gates. Samples diffs.', up: 'Every defect class seen so far has a deterministic check.' },
+  ],
+
+  humanOnly: [
+    'Decide scope', 'Grant an architecture exception', 'Sign off security',
+    'Merge to a protected branch', 'Accept UAT for the business', 'Approve production',
+  ],
+};

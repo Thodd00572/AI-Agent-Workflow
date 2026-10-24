@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Agent Workflow — ADLC</title>
+  <meta name="description" content="One human owns one feature. Six agent personas prepare the work. The human accepts every gate. Tests exist before the feature code. One feature folder carries the context." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#"><span class="dot"></span>AI Agent Workflow</a>
+  <nav>
+    <a href="demo.html">Layers</a>
+    <a href="#why">Why</a>
+    <a href="#path">The path</a>
+    <a href="#personas">Personas</a>
+    <a href="#folder">Folder</a>
+    <a href="#gates">Gates</a>
+    <a href="#human">Human</a>
+    <a href="#skeleton">Skeleton</a>
+    <a href="#adopt">Adopt</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="eyebrow mono">00 · AGENT DEVELOPMENT LIFE CYCLE</p>
+  <h1>One human.<br>One feature.<br>Six agents that stay in their job.</h1>
+  <p class="lede">ADLC is an operating model for building software with AI agents. One engineer owns a feature from requirement to production. Specialist agent personas prepare every stage. The engineer accepts every gate. Tests exist before the feature code. One feature folder carries the context, so no stage depends on chat memory.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="demo.html">Watch the layers</a>
+    <a class="btn" href="#path">Walk the path</a>
+  </div>
+  <ul class="hero-facts mono">
+    <li>8 stages</li><li>6 personas</li><li>8 gates the human accepts</li><li>1 folder per feature</li><li>0 dependencies</li>
+  </ul>
+</section>
+
+<!-- WHY -->
+<section id="why" class="section">
+  <p class="eyebrow mono">01 · WHY</p>
+  <h2>Agents did not create a new process problem. They exposed the old one.</h2>
+  <div class="compare">
+    <div class="compare-col">
+      <h3>Today</h3>
+      <ul>
+        <li>A feature waits in a queue between requirement, architecture, design, build, test and release.</li>
+        <li>Context is rebuilt at every hand-off. Nobody holds the whole outcome.</li>
+        <li>Tests are written after the code, by whoever has time.</li>
+        <li>With agents added naively: one long chat, one bloated context, one agent that quietly redesigns the plan to make its own code pass.</li>
+      </ul>
+    </div>
+    <div class="compare-col accent">
+      <h3>ADLC</h3>
+      <ul>
+        <li>The work still passes every stage. The queue between roles becomes a <strong>gate the engineer accepts</strong>.</li>
+        <li>Each stage is run by a persona in a <strong>fresh context</strong>, from the files in the feature folder.</li>
+        <li><strong>Tests exist before the feature code.</strong> The build makes them pass; it does not rewrite them.</li>
+        <li>Anything that is 1 + 1 = 2 is a <strong>deterministic check</strong>, not a paragraph begging the model.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="principles">
+    <div class="principle"><span class="mono">P1</span><h4>Small tasks, fresh context</h4><p>Models have a smart zone and a dumb zone. One stage, one session, read the files, stop. Clear rather than compact.</p></div>
+    <div class="principle"><span class="mono">P2</span><h4>Align before artefact</h4><p>Stage 1 interviews the human until the requirement is testable. Specs-to-code without alignment is vibe coding with extra steps.</p></div>
+    <div class="principle"><span class="mono">P3</span><h4>Tests before code</h4><p>Stage 5 writes failing tests from the requirement and design. Stage 6 makes them pass without touching stage 3.</p></div>
+    <div class="principle"><span class="mono">P4</span><h4>Vertical slices</h4><p>The build plan cuts tracer bullets across layers. Every slice is demonstrable, so feedback arrives early and slices can run in parallel.</p></div>
+    <div class="principle"><span class="mono">P5</span><h4>Deterministic over prose</h4><p>Gate checks run as code: ids traced, red run recorded, approvals bound to a hash. Prose can be argued with; a failing check cannot.</p></div>
+    <div class="principle"><span class="mono">P6</span><h4>No defect escapes twice</h4><p>Every escaped defect becomes one line in a rule, one new check, or one template change. Never a paragraph.</p></div>
+  </div>
+</section>
+
+<!-- THE PATH -->
+<section id="path-section" class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow mono">02 · THE DELIVERY SYSTEM</p>
+      <h2>One path. Select a step.</h2>
+    </div>
+    <p class="aside mono">Tests are written before the feature code.</p>
+  </div>
+
+  <div id="path" class="path" tabindex="0" aria-label="The eight ADLC stages"></div>
+
+  <div class="detail-wrap">
+    <div id="step-detail" class="detail"></div>
+    <div class="detail-nav">
+      <button id="step-prev" class="icon-btn" type="button" aria-label="Previous step">←</button>
+      <button id="step-next" class="icon-btn" type="button" aria-label="Next step">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section id="personas-section" class="section">
+  <p class="eyebrow mono">03 · THE SIX AGENTS</p>
+  <h2>Each agent is a persona: a role, a body of knowledge, a set of outputs, and a clear limit.</h2>
+  <p class="lede small">The same model can play all six. The persona keeps each one inside its job. A defines why and what. B defines where it fits. C defines how it should work. D plans and builds it. E proves it. F coordinates the date and prepares the release — and cannot approve its own change.</p>
+  <div id="personas" class="personas"></div>
+</section>
+
+<!-- FOLDER -->
+<section id="folder" class="section">
+  <p class="eyebrow mono">04 · THE CONTEXT CARRIER</p>
+  <h2>One feature folder. The next agent reads the files, not the chat.</h2>
+  <div class="two-col">
+    <pre class="tree"><code>features/001-rate-limit-login/
+├── 01-requirement.md        A · REQ-n, NFR-n, out of scope, interview record
+├── 02-system-map.md         B · components, data flow, dependencies
+├── 03-solution-design.md    C · modules, interfaces, errors, security, DR-n
+├── 04-build-plan.md         D · vertical slices, files, feedback loop
+├── 04-build-log.md          D · one line per slice built
+├── 05-test-plan/            E · id → test mapping, red run
+├── 06-test-summary.md       E · id → result → evidence
+├── 07-change-pack/          F · timeline, uat, deploy, rollback, approvals
+└── gates.json               ✓ approvals bound to artefact hashes</code></pre>
+    <div>
+      <h3>Why a folder, not a thread</h3>
+      <p>A chat thread is the dumb zone waiting to happen. A folder is a stable starting state: any agent, any model, any day can open it and know exactly where the feature is. It also makes the work reviewable by people who were never in the conversation.</p>
+      <h3>Ids are the thread</h3>
+      <p><code>REQ-1</code> is written once in stage 1. It appears in the system map, in a design rule, in a test name, in a result row, and in UAT. <code>adlc check</code> fails any stage that drops one.</p>
+      <h3>Doc rot is handled</h3>
+      <p>When the feature ships, the folder is archived. Agents do not read old PRDs as if they were current truth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GATES -->
+<section id="gates" class="section">
+  <p class="eyebrow mono">05 · GATES</p>
+  <h2>Agents prepare. Humans accept. Approvals are facts about a file, not memories about a conversation.</h2>
+  <div class="two-col">
+    <div>
+      <p>Every gate has two halves. <strong>Deterministic</strong>: <code>adlc check</code> verifies the artefact exists, ids are traced, open questions are empty, the red run is recorded, the rollback was rehearsed. <strong>Judgement</strong>: the engineer answers the question only a human can — is this the right scope, does it fit, would you ship on this evidence.</p>
+      <p>When the engineer accepts, <code>adlc approve</code> records the SHA-256 of the artefact. If the artefact changes afterwards, the gate turns <span class="stale mono">stale</span> and must be renewed. Re-approving an early gate drops every approval downstream. Agents never run <code>approve</code>.</p>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar mono">$ node scripts/adlc.mjs status 001</div>
+<pre><code>001-rate-limit-login — Rate-limit login attempts
+autonomy: A=assist B=assist C=assist D=act E=act F=assist
+
+✓ 1 Requirement   G1  approved A  01-requirement.md
+✓ 2 Architecture  G2  approved B  02-system-map.md
+✓ 3 Design        G3  approved C  03-solution-design.md
+✓ 4 Build plan    G4  approved D  04-build-plan.md
+✓ 5 Test plan     G5  approved E  05-test-plan
+! 6 Build         G6  stale    D  04-build-log.md
+· 7 Verify        G7  ready    E  06-test-summary.md
+  8 Release       G8  missing  F  07-change-pack
+
+current stage: 6 Build (persona D) → gate G6
+warning: a stale gate means its artefact changed after approval</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- HUMAN -->
+<section id="human" class="section">
+  <p class="eyebrow mono">06 · WHAT STAYS HUMAN</p>
+  <h2>Autonomy is earned per persona, per project, from evidence. Some things never move.</h2>
+  <div class="two-col stack">
+    <div>
+      <h3>Never delegated</h3>
+      <ul id="human-only" class="human-only"></ul>
+      <p class="muted">Agents can read approved sources, draft artefacts, generate code and tests in a branch, and report gaps. They prepare the pack that security, integration owners and the change approver read. Those people stay in their roles.</p>
+    </div>
+    <table id="autonomy" class="table">
+      <thead><tr><th>Level</th><th>Agent may</th><th>Human does</th><th>Move up when</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- LEARNING LOOP -->
+<section id="loop" class="section">
+  <p class="eyebrow mono">07 · THE LEARNING LOOP</p>
+  <h2>Every escaped defect becomes exactly one thing.</h2>
+  <div class="loop">
+    <div class="loop-step"><span class="mono">defect escapes a gate</span></div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step"><span class="mono">one line in adlc/lessons.md</span></div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-fan">
+      <div class="loop-step small"><strong>Mechanical?</strong> a new check in <code>adlc.mjs</code></div>
+      <div class="loop-step small"><strong>Judgement?</strong> one line in a rule</div>
+      <div class="loop-step small"><strong>Structural?</strong> a template change</div>
+    </div>
+  </div>
+  <pre class="lessons"><code>2026-10-23 · stage:5 · 001 · a REQ had no test and nobody noticed until verify · G5 check now fails when any id lacks a test
+2026-10-23 · stage:6 · 001 · build started before tests were red · G6 now requires G5 approval first
+2026-10-23 · stage:1 · 001 · "fast" accepted as a requirement · rule line: no adjective without a number</code></pre>
+</section>
+
+<!-- SKELETON -->
+<section id="skeleton" class="section">
+  <p class="eyebrow mono">08 · THE SKELETON</p>
+  <h2>Everything you need is markdown and one script. No framework. No dependencies.</h2>
+  <div class="two-col">
+    <pre class="tree"><code>your-repo/
+├── AGENTS.md                 entry point any agent reads first
+├── .cursor/
+│   ├── rules/
+│   │   ├── core.mdc          always-on, under 15 lines
+│   │   ├── adlc-flow.mdc     applies inside features/**
+│   │   ├── lessons.mdc       one line per promoted lesson
+│   │   └── stack.mdc         your stack, your globs
+│   ├── skills/
+│   │   ├── adlc-new/         create folder + stage-1 interview
+│   │   ├── adlc-stage/       run one stage with its persona
+│   │   └── adlc-gate/        walk the human through a gate
+│   └── agents/
+│       ├── adlc-builder.md   D · one slice, TDD, parallel-safe
+│       ├── adlc-verifier.md  E · run everything, trace evidence
+│       └── adlc-critic.md    read-only review, fresh context
+├── adlc/
+│   ├── personas/             A–F
+│   ├── templates/            01…07
+│   ├── gates.md  autonomy.md  lessons.md
+├── features/                 one folder per feature
+└── scripts/adlc.mjs          new · status · check · approve</code></pre>
+    <div>
+      <h3>Rules, skills, subagents, personas — which is which</h3>
+      <dl class="defs">
+        <dt>Rules</dt><dd>Always-on constraints. Thin. Grow by one line per lesson.</dd>
+        <dt>Skills</dt><dd>Repeatable procedures: start a feature, run a stage, walk a gate. Loaded only when invoked.</dd>
+        <dt>Subagents</dt><dd>Separate contexts for noisy or parallel work: build a slice, verify, critique.</dd>
+        <dt>Personas</dt><dd>The role a stage is run as. A persona is a file the skill or subagent loads; it is not a fourth system.</dd>
+      </dl>
+      <h3>Works with</h3>
+      <p>Cursor (rules, skills, subagents as shipped). Claude Code (<code>CLAUDE.md</code> → <code>AGENTS.md</code>, skills → <code>.claude/skills</code>, agents → <code>.claude/agents</code>). Any agent that can read a folder and run a shell command.</p>
+      <div class="cmd">
+        <code>git clone &lt;repo&gt; adlc && cd adlc && npm test && npm run site</code>
+        <button class="copy" type="button" data-copy>Copy</button>
+      </div>
+      <div class="cmd">
+        <code>node scripts/adlc.mjs new my-feature --title "My feature"</code>
+        <button class="copy" type="button" data-copy>Copy</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADOPT -->
+<section id="adopt" class="section">
+  <p class="eyebrow mono">09 · ADOPT</p>
+  <h2>Start small. Learn. Scale what the evidence showed.</h2>
+  <table class="table adopt">
+    <thead><tr><th>Stage</th><th>Weeks</th><th>What we do</th><th>What we look for</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Shadow</th><td>1–2</td><td>One feature, humans do every stage, agents watch and summarise. Fix the templates.</td><td>Where context was rebuilt by hand. Which questions stage 1 should have asked.</td></tr>
+      <tr><th scope="row">Assist</th><td>3–8</td><td>Agents draft every artefact. Humans accept every gate. Lessons go to <code>lessons.md</code> weekly.</td><td>Edit distance between draft and accepted. Defects escaping each gate.</td></tr>
+      <tr><th scope="row">Act</th><td>9–16</td><td>D builds slices in a branch; E writes tests in a branch. Parallel builders on independent slices.</td><td>Zero escaped defects at G5/G6 across 5 features. Review time per PR.</td></tr>
+      <tr><th scope="row">Scale</th><td>17+</td><td>Run the proven path on many features. Promote personas individually.</td><td>A deterministic check exists for every defect class seen so far.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Capacity does not grow because agents exist. It grows because each engineer can hold a whole feature, with evidence ready as the work moves.</p>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p><strong>AI Agent Workflow</strong> — ADLC, Agent Development Life Cycle. MIT.</p>
+  <p class="muted">Standing on: Boris Cherny's plan-then-verify-then-write-it-down loop; Matt Pocock's smart zone, grilling and tracer bullets; design:os's deterministic gates over prose; spec-driven lifecycles with hash-bound human approvals; and the pre-AI books that already said most of this.</p>
+  <p class="mono">© <span id="year"></span></p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

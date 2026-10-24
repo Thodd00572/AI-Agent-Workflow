@@ -1,0 +1,15 @@
+---
+description: Core working rules for this repository (ADLC)
+alwaysApply: true
+---
+
+# Core
+
+- Read `AGENTS.md` first, then the feature folder you are asked to work on. Files are the memory; chat is not.
+- One stage per session. Produce the stage artefact, list open questions, stop. Never start the next stage.
+- Never run `adlc approve`, never merge to a protected branch, never write "accepted" in prose. Humans accept gates.
+- Tests exist before feature code. If `05-test-plan/` is missing or green before build, stop.
+- State assumptions. If two readings exist, present both and ask. Do not pick silently.
+- Surgical edits: touch only files the build plan names; match existing style; mention unrelated issues, do not fix them.
+- No adjective without a number in requirements and designs.
+- Before saying a task is done, run the feedback loop named in `04-build-plan.md` and paste the result.

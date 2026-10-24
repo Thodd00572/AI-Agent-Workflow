@@ -1,0 +1,11 @@
+---
+description: Lessons promoted to rules. Append one line per lesson; never a paragraph.
+alwaysApply: true
+---
+
+# Lessons promoted to rules
+
+- Requirements: no adjective without a number. "Fast" is not a requirement; "p95 < 300 ms at 50 rps" is.
+- Build plans: a slice that touches only one layer is horizontal. Re-cut it.
+- Tests: a test that passes on first run proves nothing. Record the red run.
+- Reviews: review in a fresh context. The implementer is in the dumb zone by the time it finishes.

@@ -1,0 +1,12 @@
+---
+description: Stack conventions for this repository. Adopters replace this file with their own.
+globs: scripts/**,site/**,tests/**
+alwaysApply: false
+---
+
+# Stack (this repository)
+
+- Node ≥ 20, ES modules, zero runtime dependencies. Do not add packages to run the CLI or the site.
+- Tests use `node:test` and `node:assert/strict`. Put them in `tests/`.
+- The site is static: `site/index.html`, `site/styles.css`, `site/app.js`, `site/data.js`. No build step.
+- Shell out only through `node:child_process` with explicit arguments; never interpolate user input into a shell string.

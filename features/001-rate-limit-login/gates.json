@@ -1,0 +1,63 @@
+{
+  "feature": "001-rate-limit-login",
+  "title": "Rate-limit login attempts",
+  "created": "2026-10-16T09:00:00.000Z",
+  "autonomy": {
+    "A": "assist",
+    "B": "assist",
+    "C": "assist",
+    "D": "act",
+    "E": "act",
+    "F": "assist"
+  },
+  "gates": {
+    "G1": {
+      "approvedAt": "2026-10-23T05:12:48.293Z",
+      "by": "engineer",
+      "hash": "b0f7dd41f8e0139c0f4199d0cb132e4c680f22c3a5359eda1d3f3140fa25aee5",
+      "artefact": "01-requirement.md"
+    },
+    "G2": {
+      "approvedAt": "2026-10-23T05:12:48.345Z",
+      "by": "engineer",
+      "hash": "078ab2a262d28faa65f7fae8e03a7049898e9f288d51c3df8a017f0feaaa215c",
+      "artefact": "02-system-map.md"
+    },
+    "G3": {
+      "approvedAt": "2026-10-23T05:12:48.396Z",
+      "by": "engineer",
+      "hash": "dead8c0ac7932e3514ee055f1c3eb0634fe6a3bde5f389cdfa9c774efed7ea38",
+      "artefact": "03-solution-design.md"
+    },
+    "G4": {
+      "approvedAt": "2026-10-23T05:12:48.445Z",
+      "by": "engineer",
+      "hash": "39ac3afd1f1aa48b9742a9075fc6f5fd799eebed65df8c60569f36c71a201f46",
+      "artefact": "04-build-plan.md"
+    },
+    "G5": {
+      "approvedAt": "2026-10-23T05:12:48.497Z",
+      "by": "engineer",
+      "hash": "039b6ddb35c694297f25a43181e495d0bcfe31a2c76d07a06a0ebdf0299f6183",
+      "artefact": "05-test-plan"
+    },
+    "G6": {
+      "approvedAt": "2026-10-23T05:12:48.548Z",
+      "by": "engineer",
+      "hash": "2a70db29d5579f72aee992bd54e87beea0b233f33eee698d1a74550a2e3995f5",
+      "artefact": "04-build-log.md"
+    },
+    "G7": {
+      "approvedAt": "2026-10-23T05:12:48.597Z",
+      "by": "engineer",
+      "hash": "a487043533b9934f4ee98611de24f1e2b520b0abda99fb0926a6a029bcc10275",
+      "artefact": "06-test-summary.md"
+    },
+    "G8": {
+      "approvedAt": "2026-10-23T05:12:48.648Z",
+      "by": "engineer",
+      "hash": "6aaf611738935b01a68e382d8607607baab68b930e61884758c2bb0d04c823db",
+      "artefact": "07-change-pack"
+    }
+  }
+}
